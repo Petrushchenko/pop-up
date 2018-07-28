@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     imagemin = require('gulp-imagemin'),
     cssmin = require('gulp-clean-css'),
+    del = require('del'),
     autoprefixer = require('gulp-autoprefixer');
     
 var path = {
@@ -76,7 +77,11 @@ gulp.task('fonts', function() {
         .pipe(gulp.dest(path.build.fonts))
 });
 
-gulp.task('build', ['html', 'scripts', 'styles', 'css', 'fonts', 'images']);
+gulp.task('clean', function() {
+    return del.sync(path.clean); 
+});
+
+gulp.task('build', ['clean', 'html', 'scripts', 'styles', 'css', 'fonts', 'images']);
 
 gulp.task('watch', function(){
     gulp.watch(path.watch.style, ['styles']); 
