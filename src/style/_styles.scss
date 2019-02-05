@@ -1,0 +1,116 @@
+%btn {
+    font-family: 'OpenSansBold', sans-serif;
+    text-transform: uppercase;
+    padding: 10px; 
+    border-radius: 5px;
+    text-align: center;
+}
+.wrapper {
+    margin: 0 auto;
+    background-image: url(../images/background.png);
+    background-size: cover;
+    max-width: 1024px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+    &__btn {
+        @extend %btn;
+        color: $btn-text-color;
+        font-size: 26px;        
+        border: 4px solid $btn-background-color;
+        background-color: $btn-background-color;
+
+        &:hover {
+            border: 4px solid $btn-border-color;
+        }
+    }
+    .modal {
+        z-index: 10;
+        width: 100%;
+        height: 100vh;
+        background-color: transparent;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: scale(0);
+        transition: all 0.3s;
+        &__background {
+            z-index: 9;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+            background-color: darken($btn-background-color,95%);
+        }
+        &__alert {
+            color: $popup-gray-color;
+            background-color: white;
+            position: absolute;
+            z-index: 15;
+            width: 500px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            opacity:1;
+            display: flex;
+            flex-direction: column;
+        }
+        &__close{
+            display:block;
+            background-image: url(../images/icon-popup-close.svg);
+            background-size: cover;
+            width:20px;
+            height:20px;
+            transition: transform 0.3s;
+            &:hover {
+                transform: scale(1.1);
+                cursor: pointer;
+            }
+        }
+        &__warning {
+            margin: 15px 0;
+            img {
+                width: 50px;
+                height: 50px;
+            }
+            p {
+                width: 80%;
+                font-size: 20px;
+                margin: 10px auto;
+            }
+        }
+        &__buttons {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 0;
+        }
+        .buttons {
+            button {
+                @extend %btn;
+                width: 30%;
+                border: 2px solid $popup-gray-color;
+                &:hover {
+                    border-color: $popup-red-color;
+                }
+            }
+            &__alt {
+                background-color: $popup-red-color;
+                color: white;
+            }
+            &__cancel {
+                background-color: transparent;
+            }
+        }
+        &.opened {
+            transform: scale(1);
+        }
+
+    }
+}
