@@ -18,7 +18,7 @@ function createPopUp (parent){
     bg.classList = 'modal__background';
 
     let alert = document.createElement('div');
-    alert.classList = 'modal__alert';
+    alert.classList = 'modal__alert text-muted';
 
     let btnModalClose = document.createElement('span');
     btnModalClose.classList = "modal__close";

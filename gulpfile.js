@@ -5,7 +5,8 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     cssmin = require('gulp-clean-css'),
     del = require('del'),
-    autoprefixer = require('gulp-autoprefixer');
+    autoprefixer = require('gulp-autoprefixer'),
+    browserSync = require('browser-sync').create();
     
 var path = {
     build: { 
@@ -78,19 +79,19 @@ function fonts() {
 function clean() {
     return del(path.clean); 
 };
-function watch() {
-    gulp.watch(path.watch.html, html); 
-    gulp.watch(path.watch.style, styles);
-    gulp.watch(path.watch.js, scripts); 
-    gulp.watch(path.watch.img, images);
-  };
+
 var build = gulp.series(clean, gulp.parallel(html, scripts, styles, css, fonts, images));
 
-gulp.task('watch', function(){
-    gulp.watch(path.watch.style, ['styles']); 
-    gulp.watch(path.watch.html, ['html']); 
-    gulp.watch(path.watch.img, ['images']);
-    gulp.watch(path.watch.js, ['scripts']);
-  });
+ function browser() {
+   browserSync.init({
+        server: {
+            baseDir: "build"
+        }
+    });
+    gulp.watch(path.watch.style, styles).on("change", browserSync.reload); 
+    gulp.watch(path.watch.html, html).on("change", browserSync.reload); 
+    gulp.watch(path.watch.img, images).on("change", browserSync.reload);
+    gulp.watch(path.watch.js, scripts).on("change", browserSync.reload);
+}
 
-gulp.task('default', gulp.series(build, watch));
+gulp.task('default', gulp.series(build, browser));
